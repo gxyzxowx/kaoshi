@@ -1,0 +1,152 @@
+<!--
+ * @Date         : 2020-04-30 10:23:16
+ * @LastEditors  : 曾迪
+ * @LastEditTime : 2020-05-11 17:05:02
+ * @FilePath     : \kaoshi\src\views\Center.vue
+ -->
+ <style lang="scss">
+  //  个人中心
+  header{
+    height: 2.8rem;
+    background-image: url("http://hukaobang.caimaomeng.com/static/kaoshi/img/top-bg.png");
+    background-size: 100% 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: .25rem;
+    box-sizing: border-box;
+    img.pic{
+      width: 1.2rem;
+      height: 1.2rem;
+      background-color: #fff;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+      img.level{
+        width: 1.68rem;
+        height: .48rem;
+      }
+  }
+  .banner{
+    background: #fff;
+    font-size: 0;
+    img{
+      width: 7.02rem;
+      height: 1.52rem;
+      padding: .25rem;
+
+    }
+  }
+ </style>
+<template>
+  <div class="center">
+    <header>
+      <img :src="avatar" alt="" class="pic">
+
+       <img class="level" v-if="level==1" src="../assets/img/l1.png" alt="">
+        <img class="level" v-else-if="level==2" src="../assets/img/l2.png" alt="">
+    </header>
+    <div class="banner">
+      <img src="http://hukaobang.caimaomeng.com/static/kaoshi/img/invitation.png" alt="">
+    </div>
+    <van-cell-group>
+      <van-cell title="我的科目" icon="http://hukaobang.caimaomeng.com/static/kaoshi/img/subject.png" is-link to="subject" />
+      <van-cell title="新增考试" icon="http://hukaobang.caimaomeng.com/static/kaoshi/img/add.png" is-link to="subject" />
+      <van-cell title="历年真题" icon="http://hukaobang.caimaomeng.com/static/kaoshi/img/history.png" is-link to="index" />
+      <van-cell title="考试记录" icon="http://hukaobang.caimaomeng.com/static/kaoshi/img/-record.png" is-link to="index" />
+      <van-cell title="我的财富" icon="http://hukaobang.caimaomeng.com/static/kaoshi/img/ware.png" is-link to="index" />
+      <van-cell title="奖励细则" icon="http://hukaobang.caimaomeng.com/static/kaoshi/img/rule.png" is-link to="index" />
+    </van-cell-group>
+  </div>
+</template>
+
+<script>
+// @ is an alias to /src
+// import HelloWorld from '@/components/HelloWorld.vue'
+import Vue from 'vue'
+import { Cell, CellGroup, Icon } from 'vant'
+
+Vue.use(Icon)
+
+Vue.use(Cell)
+Vue.use(CellGroup)
+export default {
+  data () {
+    return {
+      code: '',
+      token: '',
+      avatar: '',
+      level: ''
+    }
+  },
+  mounted () {
+    // 取得code 以和后端换取token
+    // 开发阶段用固定token
+    const token = '99d8ra3vlUcCH4uWVQjBN4QuqZ607JbdQg2zJQ9R'
+    this.token = token
+    window.sessionStorage.setItem('token', token)
+    // getToken后获取个人信息
+    this.personalCenter()
+    // 开发阶段完毕
+
+    // 正式
+    // this.getCode()
+  },
+  methods: {
+    getCode () { // 非静默授权，第一次有弹框
+      this.code = ''
+      var local = window.location.href // 获取页面url
+      var appid = 'wx4c36d423f21966fc'
+      this.code = this.getUrlCode().code // 截取code
+      if (!this.code) { // 如果没有code，则去请求
+        window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appid}&redirect_uri=${encodeURIComponent(local)}&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect`
+      } else {
+        // 你自己的业务逻辑
+        alert(`这是code: ${this.code}`)
+        this.getToken()
+      }
+    },
+    getUrlCode () { // 截取url中的code方法
+      var url = location.search
+      this.winUrl = url
+      var theRequest = { }
+      if (url.indexOf('?') !== -1) {
+        var str = url.substr(1)
+        var strs = str.split('&')
+        for (var i = 0; i < strs.length; i++) {
+          theRequest[strs[i].split('=')[0]] = (strs[i].split('=')[1])
+        }
+      }
+      return theRequest
+    },
+    getToken () {
+      const _this = this
+      this.WR.post('/api/base/wxLogin', {
+        code: _this.code
+      }, this).then((rs) => {
+        alert(JSON.stringify(rs))
+        const token = rs.token
+        window.sessionStorage.setItem('token', token)
+      })
+    },
+    personalCenter () {
+      const _this = this
+      this.$load.show()
+      this.WR.post('/api/v1/personalCenter', {
+        token: _this.token
+      }, this).then((rs) => {
+        if (rs.code === 0) {
+          _this.avatar = rs.data.avatar
+          _this.level = rs.data.level
+        }
+        // console.log(JSON.stringify(rs))
+        this.$load.hide()
+      })
+    }
+  },
+  components: {
+    // HelloWorld
+  }
+}
+</script>

@@ -1,16 +1,26 @@
 /*
  * @Date         : 2020-04-30 10:23:16
  * @LastEditors  : 曾迪
- * @LastEditTime : 2020-04-30 10:47:06
+ * @LastEditTime : 2020-05-11 11:50:25
  * @FilePath     : \kaoshi\src\main.js
  */
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import Loading from '@/components/loading/index.js'
 
 // 全局引用公共函数
 import WR from './assets/js/wr.js'
+
+import BackBar from '@/components/BackBar.vue'
+
+// 全局引入rem
+import './assets/js/rem.js'
+
+Vue.component('BackBar', BackBar)
+
+Vue.use(Loading)
 Vue.prototype.WR = WR
 
 Vue.config.productionTip = false
