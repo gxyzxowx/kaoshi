@@ -1,10 +1,10 @@
 <!--
  * @Date         : 2020-04-30 10:23:16
  * @LastEditors  : 曾迪
- * @LastEditTime : 2020-05-11 17:05:02
+ * @LastEditTime : 2020-05-12 11:15:59
  * @FilePath     : \kaoshi\src\views\Center.vue
  -->
- <style lang="scss">
+ <style lang="scss" scoped>
   //  个人中心
   header{
     height: 2.8rem;
@@ -54,8 +54,8 @@
       <van-cell title="我的科目" icon="http://hukaobang.caimaomeng.com/static/kaoshi/img/subject.png" is-link to="subject" />
       <van-cell title="新增考试" icon="http://hukaobang.caimaomeng.com/static/kaoshi/img/add.png" is-link to="subject" />
       <van-cell title="历年真题" icon="http://hukaobang.caimaomeng.com/static/kaoshi/img/history.png" is-link to="index" />
-      <van-cell title="考试记录" icon="http://hukaobang.caimaomeng.com/static/kaoshi/img/-record.png" is-link to="index" />
-      <van-cell title="我的财富" icon="http://hukaobang.caimaomeng.com/static/kaoshi/img/ware.png" is-link to="index" />
+      <van-cell title="考试记录" icon="http://hukaobang.caimaomeng.com/static/kaoshi/img/-record.png" is-link to="record" />
+      <van-cell title="我的财富" icon="http://hukaobang.caimaomeng.com/static/kaoshi/img/ware.png" is-link to="wealth" />
       <van-cell title="奖励细则" icon="http://hukaobang.caimaomeng.com/static/kaoshi/img/rule.png" is-link to="index" />
     </van-cell-group>
   </div>
@@ -135,7 +135,7 @@ export default {
       this.$load.show()
       this.WR.post('/api/v1/personalCenter', {
         token: _this.token
-      }, this).then((rs) => {
+      }).then((rs) => {
         if (rs.code === 0) {
           _this.avatar = rs.data.avatar
           _this.level = rs.data.level

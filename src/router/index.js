@@ -1,7 +1,7 @@
 /*
  * @Date         : 2020-04-30 10:23:16
  * @LastEditors  : 曾迪
- * @LastEditTime : 2020-05-11 15:58:48
+ * @LastEditTime : 2020-05-12 14:13:40
  * @FilePath     : \kaoshi\src\router\index.js
  */
 import Vue from 'vue'
@@ -44,6 +44,30 @@ const routes = [
     path: '/charge',
     name: 'Charge',
     component: () => import('../views/Charge.vue')
+  },
+  {
+    // 考试记录
+    path: '/record',
+    name: 'Record',
+    component: () => import('../views/Record.vue')
+  },
+  {
+    // 我的财富
+    path: '/wealth',
+    name: 'Wealth',
+    component: () => import('../views/Wealth.vue')
+  },
+  {
+    // 我的财富--星星/钻石兑换
+    path: '/wealth/exchange',
+    name: 'Exchange',
+    component: () => import('../views/wealth/exchange.vue')
+  },
+  {
+    // 我的财富-- 申请提现
+    path: '/wealth/get',
+    name: 'Get',
+    component: () => import('../views/wealth/get.vue')
   }
 ]
 

@@ -1,7 +1,7 @@
 <!--
  * @Date         : 2020-05-06 14:51:46
  * @LastEditors  : 曾迪
- * @LastEditTime : 2020-05-11 16:28:23
+ * @LastEditTime : 2020-05-12 14:18:20
  * @FilePath     : \kaoshi\src\views\Subject.vue
  * @Description  : 我的科目subject
  -->
@@ -12,7 +12,7 @@
       <van-collapse-item
         :title="item.name"
         :name="index"
-        icon="fire-o"
+        icon="http://hukaobang.caimaomeng.com/static/kaoshi/img/history.png"
         size="large"
         v-for="(item, index) in list"
         :key="item.id"
@@ -48,113 +48,112 @@
 <script>
 import Vue from 'vue'
 import { Collapse, CollapseItem } from 'vant'
-// import BackBar from '@/components/BackBar.vue'
 
 Vue.use(Collapse)
 Vue.use(CollapseItem)
 export default {
   data () {
     return {
-      active1: 0,
+      active1: '0',
       active2: '0',
       active3: '0',
       list: [
-        {
-          id: 1,
-          name: '护士',
-          child: [
-            { id: 1, name: '基础知识', num: '39次' },
-            { id: 2, name: '专业知识', num: '50次' },
-            { id: 3, name: '相关专业知识', num: '50次' },
-            { id: 4, name: '专业实践能力', num: '50次' }
-          ]
-        },
-        {
-          id: 2,
-          name: '护师',
-          child: [
-            { id: 1, name: '基础知识', num: '未开通' },
-            { id: 2, name: '专业知识', num: '未开通' },
-            { id: 3, name: '相关专业知识', num: '未开通' },
-            { id: 4, name: '专业实践能力', num: '未开通' }
-          ]
-        },
-        {
-          id: 3,
-          name: '主管护师',
-          child: [
-            {
-              id: 1,
-              name: '护理学',
-              child: [
-                { id: 1, name: '基础知识', num: '未开通' },
-                { id: 2, name: '专业知识', num: '未开通' },
-                { id: 3, name: '相关专业知识', num: '未开通' },
-                { id: 4, name: '专业实践能力', num: '未开通' }
-              ]
-            },
-            {
-              id: 2,
-              name: '内科护理学',
-              child: [
-                { id: 1, name: '基础知识', num: '未开通' },
-                { id: 2, name: '专业知识', num: '未开通' },
-                { id: 3, name: '相关专业知识', num: '未开通' },
-                { id: 4, name: '专业实践能力', num: '未开通' }
-              ]
-            },
-            {
-              id: 3,
-              name: '外科护理学',
-              child: [
-                { id: 1, name: '基础知识', num: '未开通' },
-                { id: 2, name: '专业知识', num: '未开通' },
-                { id: 3, name: '相关专业知识', num: '未开通' },
-                { id: 4, name: '专业实践能力', num: '未开通' }
-              ]
-            },
-            {
-              id: 4,
-              name: '妇产科护理学',
-              child: [
-                { id: 1, name: '基础知识', num: '未开通' },
-                { id: 2, name: '专业知识', num: '未开通' },
-                { id: 3, name: '相关专业知识', num: '未开通' },
-                { id: 4, name: '专业实践能力', num: '未开通' }
-              ]
-            },
-            {
-              id: 5,
-              name: '儿科护理学',
-              child: [
-                { id: 1, name: '基础知识', num: '未开通' },
-                { id: 2, name: '专业知识', num: '未开通' },
-                { id: 3, name: '相关专业知识', num: '未开通' },
-                { id: 4, name: '专业实践能力', num: '未开通' }
-              ]
-            },
-            {
-              id: 6,
-              name: '社区护理学',
-              child: [
-                { id: 1, name: '基础知识', num: '未开通' },
-                { id: 2, name: '专业知识', num: '未开通' },
-                { id: 3, name: '相关专业知识', num: '未开通' },
-                { id: 4, name: '专业实践能力', num: '未开通' }
-              ]
-            }
-          ]
-        },
-        {
-          id: 4,
-          name: '副主任护师',
-          child: [
-            { id: 1, name: '基础知识', num: '未开通' },
-            { id: 2, name: '专业知识', num: '未开通' },
-            { id: 3, name: '相关专业知识', num: '未开通' },
-            { id: 4, name: '专业实践能力', num: '未开通' }
-          ]
-        }
+        // {
+        //   id: 1,
+        //   name: '护士',
+        //   child: [
+        //     { id: 1, name: '基础知识', num: '39次' },
+        //     { id: 2, name: '专业知识', num: '50次' },
+        //     { id: 3, name: '相关专业知识', num: '50次' },
+        //     { id: 4, name: '专业实践能力', num: '50次' }
+        //   ]
+        // },
+        // {
+        //   id: 2,
+        //   name: '护师',
+        //   child: [
+        //     { id: 1, name: '基础知识', num: '未开通' },
+        //     { id: 2, name: '专业知识', num: '未开通' },
+        //     { id: 3, name: '相关专业知识', num: '未开通' },
+        //     { id: 4, name: '专业实践能力', num: '未开通' }
+        //   ]
+        // },
+        // {
+        //   id: 3,
+        //   name: '主管护师',
+        //   child: [
+        //     {
+        //       id: 1,
+        //       name: '护理学',
+        //       child: [
+        //         { id: 1, name: '基础知识', num: '未开通' },
+        //         { id: 2, name: '专业知识', num: '未开通' },
+        //         { id: 3, name: '相关专业知识', num: '未开通' },
+        //         { id: 4, name: '专业实践能力', num: '未开通' }
+        //       ]
+        //     },
+        //     {
+        //       id: 2,
+        //       name: '内科护理学',
+        //       child: [
+        //         { id: 1, name: '基础知识', num: '未开通' },
+        //         { id: 2, name: '专业知识', num: '未开通' },
+        //         { id: 3, name: '相关专业知识', num: '未开通' },
+        //         { id: 4, name: '专业实践能力', num: '未开通' }
+        //       ]
+        //     },
+        //     {
+        //       id: 3,
+        //       name: '外科护理学',
+        //       child: [
+        //         { id: 1, name: '基础知识', num: '未开通' },
+        //         { id: 2, name: '专业知识', num: '未开通' },
+        //         { id: 3, name: '相关专业知识', num: '未开通' },
+        //         { id: 4, name: '专业实践能力', num: '未开通' }
+        //       ]
+        //     },
+        //     {
+        //       id: 4,
+        //       name: '妇产科护理学',
+        //       child: [
+        //         { id: 1, name: '基础知识', num: '未开通' },
+        //         { id: 2, name: '专业知识', num: '未开通' },
+        //         { id: 3, name: '相关专业知识', num: '未开通' },
+        //         { id: 4, name: '专业实践能力', num: '未开通' }
+        //       ]
+        //     },
+        //     {
+        //       id: 5,
+        //       name: '儿科护理学',
+        //       child: [
+        //         { id: 1, name: '基础知识', num: '未开通' },
+        //         { id: 2, name: '专业知识', num: '未开通' },
+        //         { id: 3, name: '相关专业知识', num: '未开通' },
+        //         { id: 4, name: '专业实践能力', num: '未开通' }
+        //       ]
+        //     },
+        //     {
+        //       id: 6,
+        //       name: '社区护理学',
+        //       child: [
+        //         { id: 1, name: '基础知识', num: '未开通' },
+        //         { id: 2, name: '专业知识', num: '未开通' },
+        //         { id: 3, name: '相关专业知识', num: '未开通' },
+        //         { id: 4, name: '专业实践能力', num: '未开通' }
+        //       ]
+        //     }
+        //   ]
+        // },
+        // {
+        //   id: 4,
+        //   name: '副主任护师',
+        //   child: [
+        //     { id: 1, name: '基础知识', num: '未开通' },
+        //     { id: 2, name: '专业知识', num: '未开通' },
+        //     { id: 3, name: '相关专业知识', num: '未开通' },
+        //     { id: 4, name: '专业实践能力', num: '未开通' }
+        //   ]
+        // }
       ],
 
       token: window.sessionStorage.getItem('token')
@@ -162,7 +161,7 @@ export default {
   },
   mounted () {
     // console.log(this.token)
-    // this.getData()
+    this.getData()
   },
   methods: {
     getData () {

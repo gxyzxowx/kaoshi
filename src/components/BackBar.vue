@@ -1,7 +1,7 @@
 <!--
  * @Date         : 2020-05-09 11:18:16
  * @LastEditors  : 曾迪
- * @LastEditTime : 2020-05-11 11:57:37
+ * @LastEditTime : 2020-05-12 14:32:05
  * @FilePath     : \kaoshi\src\components\BackBar.vue
  * @Description  : 返回头公共组件
  -->
@@ -15,6 +15,8 @@
   padding: 0 0.25rem;
   box-sizing: border-box;
   font-size: 0.34rem;
+  color:#333;
+  // border-bottom: 1px solid #eee;
   .left,
   .right {
     width: 1rem;
@@ -24,7 +26,7 @@
 }
 </style>
  <template>
-  <div class="backbar">
+  <div class="backbar van-hairline--bottom">
     <div class="left"  v-on:click="back">
       <van-icon name="arrow-left" />
     </div>

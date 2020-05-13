@@ -1,7 +1,7 @@
 <!--
  * @Date         : 2020-04-30 10:23:16
  * @LastEditors  : 曾迪
- * @LastEditTime : 2020-05-09 11:41:17
+ * @LastEditTime : 2020-05-12 09:32:50
  * @FilePath     : \kaoshi\src\App.vue
  * @Description  :
  -->
@@ -16,10 +16,10 @@
 </template>
 
 <style lang="scss">
-html{
+html,body{
   height: 100%;
   background: rgba(247, 247, 247, 1);
-  overflow: hidden;
+  overflow-y: scroll;
 }
 
 </style>
