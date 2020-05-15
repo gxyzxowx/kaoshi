@@ -1,7 +1,7 @@
 <!--
  * @Date         : 2020-04-30 10:23:16
  * @LastEditors  : 曾迪
- * @LastEditTime : 2020-05-12 11:15:59
+ * @LastEditTime : 2020-05-14 16:02:18
  * @FilePath     : \kaoshi\src\views\Center.vue
  -->
  <style lang="scss" scoped>
@@ -56,7 +56,7 @@
       <van-cell title="历年真题" icon="http://hukaobang.caimaomeng.com/static/kaoshi/img/history.png" is-link to="index" />
       <van-cell title="考试记录" icon="http://hukaobang.caimaomeng.com/static/kaoshi/img/-record.png" is-link to="record" />
       <van-cell title="我的财富" icon="http://hukaobang.caimaomeng.com/static/kaoshi/img/ware.png" is-link to="wealth" />
-      <van-cell title="奖励细则" icon="http://hukaobang.caimaomeng.com/static/kaoshi/img/rule.png" is-link to="index" />
+      <van-cell title="奖励细则" icon="http://hukaobang.caimaomeng.com/static/kaoshi/img/rule.png" is-link to="rule" />
     </van-cell-group>
   </div>
 </template>
@@ -83,7 +83,7 @@ export default {
   mounted () {
     // 取得code 以和后端换取token
     // 开发阶段用固定token
-    const token = '99d8ra3vlUcCH4uWVQjBN4QuqZ607JbdQg2zJQ9R'
+    const token = '8a30zjFHlb26Fn3LAj1IxivYKJg/2K7zwO2yVHVN'
     this.token = token
     window.sessionStorage.setItem('token', token)
     // getToken后获取个人信息

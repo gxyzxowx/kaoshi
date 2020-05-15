@@ -1,7 +1,7 @@
 /*
  * @Date         : 2020-04-30 10:23:16
  * @LastEditors  : 曾迪
- * @LastEditTime : 2020-05-12 14:13:40
+ * @LastEditTime : 2020-05-14 15:02:16
  * @FilePath     : \kaoshi\src\router\index.js
  */
 import Vue from 'vue'
@@ -40,6 +40,12 @@ const routes = [
     component: () => import('../views/SureSubject.vue')
   },
   {
+    // 开始考试
+    path: '/exam',
+    name: 'Exam',
+    component: () => import('../views/Exam.vue')
+  },
+  {
     // 充值次数
     path: '/charge',
     name: 'Charge',
@@ -50,6 +56,12 @@ const routes = [
     path: '/record',
     name: 'Record',
     component: () => import('../views/Record.vue')
+  },
+  {
+    // 奖励细则
+    path: '/rule',
+    name: 'Rule',
+    component: () => import('../views/Rule.vue')
   },
   {
     // 我的财富
