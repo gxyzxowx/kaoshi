@@ -1,7 +1,7 @@
 <!--
  * @Date         : 2020-05-12 11:33:30
  * @LastEditors  : 曾迪
- * @LastEditTime : 2020-05-13 14:24:46
+ * @LastEditTime : 2020-05-22 17:02:01
  * @FilePath     : \kaoshi\src\views\wealth\exchange.vue
  * @Description  : 星星/钻石兑换
  -->
@@ -47,7 +47,7 @@
           <div v-if="!item.child[0].child">
             <!-- 无二级 ,无mid -->
             <!-- 详情进入 -->
-            <van-cell :title="item3.name" is-link :to="{path: 'suresubject',query:{pindex: index, oindex: index3, list: JSON.stringify(list)}}" :value="item3.num"  v-for="(item3, index3) in item.child" :key="item3.id"/>
+            <van-cell :title="item3.name" is-link  :value="item3.num"  v-for="(item3) in item.child" :key="item3.id" @click="confirmExchange(item.id, '',item3.id)"/>
           </div>
           <div v-else>
             <!-- 有二级分类 -->
@@ -59,7 +59,7 @@
             >
             <van-collapse v-model="active3" accordion :border="false">
               <!-- 详情进入 -->
-              <van-cell :title="item3.name" is-link :to="{path: 'suresubject',query:{pindex: index, mindex: index2, oindex: index3, list: JSON.stringify(list)}}" :value="item3.num"  v-for="(item3, index3) in item2.child" :key="item3.id"/>
+              <van-cell :title="item3.name" is-link @click="confirmExchange(item.id, item2.id, item3.id)" :value="item3.num"  v-for="(item3) in item2.child" :key="item3.id"/>
             </van-collapse>
             </van-collapse-item>
           </div>
@@ -73,8 +73,10 @@
 </template>
 <script>
 import Vue from 'vue'
-import { Collapse, CollapseItem } from 'vant'
+import { Collapse, CollapseItem, Dialog } from 'vant'
 
+// 全局注册
+Vue.use(Dialog)
 Vue.use(Collapse)
 Vue.use(CollapseItem)
 export default {
@@ -128,6 +130,28 @@ export default {
         }
 
         this.$load.hide()
+      })
+    },
+    // 弹出框
+    confirmExchange (pid, mid, oid) {
+      Dialog.confirm({
+        title: '确认兑换',
+        message: '兑换一次将扣除' + this.price + '个' + this.title + '，是否确认兑换？'
+      }).then(() => {
+        this.sendExchange(pid, mid, oid)
+      })
+    },
+    sendExchange (pid, mid, oid) {
+      let url = ''
+      if (this.type === 1) {
+        url = '/api/v1/starExchange'
+      } else if (this.type === 2) {
+        url = '/api/v1/diamondExchange'
+      }
+      this.WR.post(url, {
+        token: this.token
+      }).then(rs => {
+        console.log(rs)
       })
     }
   }

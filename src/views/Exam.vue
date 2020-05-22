@@ -1,7 +1,7 @@
 <!--
  * @Date         : 2020-05-13 14:36:44
  * @LastEditors  : 曾迪
- * @LastEditTime : 2020-05-18 17:48:19
+ * @LastEditTime : 2020-05-22 16:45:05
  * @FilePath     : \kaoshi\src\views\Exam.vue
  * @Description  : 开始考试
  -->
@@ -94,7 +94,7 @@
   }
   .timu{
     ul.handlelist li.wrong{
-      background: rgba(255, 0, 0, 0.788);
+      background: rgba(255, 0, 0, 0.788) !important;
       color: #fff;
     }
     ul.handlelist li.right{
@@ -139,7 +139,7 @@
       </section>
       <div class="correct" v-if="Det.show">
         <div class="correct-title">
-           <span class="red">{{list[nowIndex].answer == list[nowIndex].userAnswer? '正确': '错误'}}。</span> <span>正确答案：{{list[nowIndex].answer.toUpperCase()}}</span>
+           <span class="red">{{list[nowIndex].reslut0 ? '正确': '错误'}}。</span> <span>正确答案：{{list[nowIndex].answer.toUpperCase()}}</span>
         </div>
             解析：{{list[nowIndex].analysis? list[nowIndex].analysis: '暂无'}}
       </div>
@@ -155,7 +155,7 @@
         <div class="timu" v-if="panel.no0.length">
           <div class="inner-title">单选题：</div>
           <ul class="handlelist">
-            <li :class="{right: Det.show , wrong: item.reslut == 0}"
+            <li :class="{ right: Det.show, wrong: item.reslut0!=1}"
               v-for="(item, index) in panel.no0"
               :key="index"
               @click="choseOne(item.index)"
@@ -166,7 +166,7 @@
         <div class="timu" v-if="panel.no1.length">
           <div class="inner-title">共答题：</div>
           <ul class="handlelist">
-            <li :class="{right: Det.show}"
+            <li :class="{right: Det.show, wrong: item.reslut0!=1}"
               v-for="(item, index) in panel.no1"
               :key="index"
               @click="choseOne(item.index)"
@@ -177,7 +177,7 @@
         <div class="timu"  v-if="panel.no2.length">
           <div class="inner-title">共题题：</div>
           <ul class="handlelist">
-            <li :class="{right: Det.show}"
+            <li :class="{right: Det.show, wrong: item.reslut0!=1}"
               v-for="(item, index) in panel.no2"
               :key="index"
               @click="choseOne(item.index)"
@@ -188,7 +188,7 @@
         <div class="timu"  v-if="panel.no3.length">
           <div class="inner-title">多选题：</div>
           <ul class="handlelist">
-            <li :class="{right: Det.show}"
+            <li :class="{right: Det.show, wrong: item.reslut0!=1}"
               v-for="(item, index) in panel.no3"
               :key="index"
               @click="choseOne(item.index)"
@@ -277,9 +277,6 @@ export default {
     } else if (seeDetail) {
       // 是查看得分详情
       console.log('查看得分详情')
-      this.ifIng = false
-      this.backtitle = '查看得分详情'
-      this.Det.show = true
       this.scoreDetails()
     } else {
       // 是新开考试
@@ -343,6 +340,7 @@ export default {
         mid: this.id.mid ? this.id.mid : 0,
         oid: this.id.oid
       }).then(rs => {
+        console.log(JSON.stringify(rs))
         if (rs.code === 0) {
           console.log(JSON.stringify(rs.data.list.length))
           const data = rs.data
@@ -385,6 +383,9 @@ export default {
     },
     // 考试完毕，查看得分详情
     scoreDetails () {
+      this.ifIng = false
+      this.backtitle = '查看得分详情'
+      this.Det.show = true
       this.WR.post('/api/v1/scoreDetails', {
         token: this.token,
         number: this.number
@@ -402,13 +403,13 @@ export default {
           }
           this.answerlist.push(answerArr)
           // 正确还是错误result 0 错误，1正确
-
           const type = item.type
           const notext = 'no' + type
+          arr[index].reslut0 = item.result
           this.panel[notext].push(item)
         })
         console.log(this.list)
-        console.log(this.answerlist)
+        // console.log(this.answerlist)
       })
     },
     // 点击返回按钮后back
@@ -461,7 +462,7 @@ export default {
         console.log(rs)
         if (rs.code === 0 && type === 1) {
           // 主动交卷后查看答案解析
-          this.$router.push('/')
+          this.scoreDetails()
         }
       })
     },

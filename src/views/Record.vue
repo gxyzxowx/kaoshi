@@ -1,7 +1,7 @@
 <!--
  * @Date         : 2020-05-11 17:07:18
  * @LastEditors  : 曾迪
- * @LastEditTime : 2020-05-18 14:15:38
+ * @LastEditTime : 2020-05-22 16:44:20
  * @FilePath     : \kaoshi\src\views\Record.vue
  * @Description  : 考试记录
  -->
@@ -69,7 +69,7 @@ export default {
         if (rs.code === 0) {
           _this.list = rs.data
         }
-        console.log(JSON.stringify(rs))
+        // console.log(JSON.stringify(rs))
         this.$load.hide()
       })
     },
@@ -77,7 +77,7 @@ export default {
     selectOne (index) {
       const status = this.list[index].status
       // 0继续答题，1查看得分
-      console.log(status)
+      // console.log(status)
       const number = this.list[index].number
       if (status === 0) {
         this.$router.push({ name: 'Exam', query: { number: number } })
