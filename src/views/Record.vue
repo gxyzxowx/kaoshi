@@ -1,7 +1,7 @@
 <!--
  * @Date         : 2020-05-11 17:07:18
  * @LastEditors  : 曾迪
- * @LastEditTime : 2020-05-12 09:34:07
+ * @LastEditTime : 2020-05-18 14:15:38
  * @FilePath     : \kaoshi\src\views\Record.vue
  * @Description  : 考试记录
  -->
@@ -33,7 +33,7 @@ main{
      <BackBar class="fixed">考试记录</BackBar>
      <main>
        <van-cell-group class="group">
-          <van-cell v-for="(item) in list" :key="item.number" :title="item.name"  icon="http://hukaobang.caimaomeng.com/static/kaoshi/img/history.png" is-link value="继续答题" :label="item.start_time" value-class="valueclass" />
+          <van-cell v-for="(item, index) in list" :key="item.number" :title="item.name"  icon="http://hukaobang.caimaomeng.com/static/kaoshi/img/history.png" is-link :value="item.status? item.fraction +' 分': '继续答题'" :label="item.start_time" value-class="valueclass" @click="selectOne(index)"/>
     </van-cell-group>
 <!-- <div class="test">
   你好
@@ -72,6 +72,18 @@ export default {
         console.log(JSON.stringify(rs))
         this.$load.hide()
       })
+    },
+    // 继续答题或者查看得分详情
+    selectOne (index) {
+      const status = this.list[index].status
+      // 0继续答题，1查看得分
+      console.log(status)
+      const number = this.list[index].number
+      if (status === 0) {
+        this.$router.push({ name: 'Exam', query: { number: number } })
+      } else {
+        this.$router.push({ name: 'Exam', query: { number: number, seeDetail: true } })
+      }
     }
   }
 }

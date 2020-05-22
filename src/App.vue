@@ -1,16 +1,12 @@
 <!--
  * @Date         : 2020-04-30 10:23:16
  * @LastEditors  : 曾迪
- * @LastEditTime : 2020-05-12 09:32:50
- * @FilePath     : \kaoshi\src\App.vue
+ * @LastEditTime : 2020-05-19 10:30:09
+ * @FilePath     : \09house_agente:\codes\part3\06wx_kaoshi\kaoshi\src\App.vue
  * @Description  :
  -->
 <template>
   <div id="app">
-    <!-- <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div> -->
     <router-view/>
   </div>
 </template>
