@@ -1,7 +1,7 @@
 <!--
  * @Date         : 2020-05-12 09:36:58
  * @LastEditors  : 曾迪
- * @LastEditTime : 2020-05-12 14:30:46
+ * @LastEditTime : 2020-05-26 11:21:33
  * @FilePath     : \kaoshi\src\views\Wealth.vue
  * @Description  : 我的财富
  -->
@@ -71,10 +71,10 @@
       <img :src="avatar" alt="" class="pic">
      <div class="content">
        <div class="top">
-         <div class="text">
+         <div class="text" v-if="agent">
            <span class="fff">院级代理 -
              </span>
-             <span v-if="!is_agent">未生效</span>
+             <span v-if="!is_agent" @click="applyAgent()">未生效</span>
              <span v-else-if="agent==1">区代</span>
              <span v-else>院代</span>
          </div>
@@ -106,8 +106,10 @@
 
 <script>
 import Vue from 'vue'
-import { Cell, CellGroup, Icon } from 'vant'
+import { Cell, CellGroup, Icon, Dialog } from 'vant'
 
+// 全局注册
+Vue.use(Dialog)
 Vue.use(Icon)
 
 Vue.use(Cell)
@@ -150,6 +152,25 @@ export default {
 
         this.$load.hide()
       })
+    },
+    applyAgent () {
+      if (!this.agent) {
+        return
+      }
+      Dialog.confirm({
+        title: '确认缴费',
+        message: '未生效状态下代理等级不生效，确认立即缴费？'
+      })
+        .then(() => {
+          console.log(1)
+          // console.log(this.id)
+          this.WR.post('/api/v1/agencyFeeWxPay', {
+            token: window.sessionStorage.getItem('token')
+          })
+            .then(rs => {
+              alert(rs)
+            })
+        })
     }
   },
   components: {

@@ -1,7 +1,7 @@
 /*
  * @Date         : 2020-04-30 10:23:16
  * @LastEditors  : 曾迪
- * @LastEditTime : 2020-05-25 16:05:29
+ * @LastEditTime : 2020-05-26 10:20:28
  * @FilePath     : \kaoshi\src\router\index.js
  */
 import Vue from 'vue'
@@ -98,6 +98,12 @@ const routes = [
     path: '/historydetail',
     name: 'HistoryDetail',
     component: () => import('../views/HistoryDetail.vue')
+  },
+  {
+    // 开通科目
+    path: '/opensubject',
+    name: 'OpenSubject',
+    component: () => import('../views/OpenSubject.vue')
   }
 ]
 

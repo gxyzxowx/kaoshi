@@ -1,7 +1,7 @@
 <!--
  * @Date         : 2020-05-11 15:33:15
  * @LastEditors  : 曾迪
- * @LastEditTime : 2020-05-25 17:56:31
+ * @LastEditTime : 2020-05-26 10:51:45
  * @FilePath     : \kaoshi\src\views\Charge.vue
  * @Description  : 充值次数
  -->
@@ -92,13 +92,15 @@ export default {
       num: 0,
       money: '',
       chargeNum: 1,
-      purchase_price: 0.00
+      purchase_price: 0.00,
+      id: ''
     }
   },
   mounted () {
     const obj = this.$route.query
     this.name = obj.name
     this.num = obj.num
+    this.id = obj.id
     this.purchase_price = JSON.parse(window.sessionStorage.getItem('userinfo')).purchase_price
   },
   methods: {
@@ -114,13 +116,23 @@ export default {
     },
     sure () {
       const total = this.chargeNum * this.purchase_price
-      console.log('确认支付')
+      // console.log('确认支付')
       Dialog.confirm({
         title: '确认支付',
         message: `您购买科目:${this.name}，次数：${this.chargeNum}, 单次费用：${this.purchase_price}元，共${total}元?`
       })
         .then(() => {
-          // on confirm
+          console.log(1)
+          const sendid = `${this.id.pid},${this.id.mid},${this.id.oid}`
+          // console.log(this.id)
+          this.WR.post('/api/v1/purchases', {
+            token: window.sessionStorage.getItem('token'),
+            subjects: sendid,
+            frequency: this.chargeNum
+          })
+            .then(rs => {
+              alert(rs)
+            })
         })
         .catch(() => {
           // on cancel

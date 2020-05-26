@@ -1,7 +1,7 @@
 <!--
  * @Date         : 2020-05-06 14:51:46
  * @LastEditors  : 曾迪
- * @LastEditTime : 2020-05-25 18:00:39
+ * @LastEditTime : 2020-05-26 10:36:54
  * @FilePath     : \kaoshi\src\views\Subject.vue
  * @Description  : 我的科目subject
  -->
@@ -173,10 +173,17 @@ export default {
         this.$load.hide()
         this.list = rs.data
       })
+    },
+    linkTo (index, index2, index3, list, num) {
+      if (num === '未开通') {
+        const name = list[index].name
+        const pid = list[index].id
+        this.$router.push({ name: 'OpenSubject', query: { pid: pid, name: name } })
+        return
+      }
+      this.$router.push({ name: 'SureSubject', query: { pindex: index, mindex: index2, oindex: index3, list: JSON.stringify(list) } })
     }
-  },
-  linkTo (index, index2, index3, list, num) {
-    this.$route.push({ name: 'suresubject', query: { pindex: index, mindex: index2, oindex: index3, list: JSON.stringify(list) } })
   }
+
 }
 </script>

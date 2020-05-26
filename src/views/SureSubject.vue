@@ -1,7 +1,7 @@
 <!--
  * @Date         : 2020-05-11 11:12:39
  * @LastEditors  : 曾迪
- * @LastEditTime : 2020-05-25 16:48:32
+ * @LastEditTime : 2020-05-26 10:40:44
  * @FilePath     : \kaoshi\src\views\SureSubject.vue
  * @Description  : 确认科目
  -->
@@ -107,7 +107,8 @@ export default {
       const obj = {
         name: this.name,
         num: this.num,
-        fee: this.money
+        fee: this.money,
+        id: this.id
       }
       this.$router.push({ path: '/charge', query: obj })
     },
