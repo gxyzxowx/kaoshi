@@ -1,7 +1,7 @@
 /*
  * @Date         : 2020-04-30 10:41:48
  * @LastEditors  : 曾迪
- * @LastEditTime : 2020-05-15 14:06:03
+ * @LastEditTime : 2020-05-25 17:19:42
  * @FilePath     : \kaoshi\src\assets\js\wr.js
  */
 import axios from 'axios'
@@ -31,6 +31,7 @@ const obj = {
           reject(err.data)
         })
     })
-  }
+  },
+  base_url: BASE_URL
 }
 export default obj

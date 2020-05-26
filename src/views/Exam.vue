@@ -1,7 +1,7 @@
 <!--
  * @Date         : 2020-05-13 14:36:44
  * @LastEditors  : 曾迪
- * @LastEditTime : 2020-05-22 16:45:05
+ * @LastEditTime : 2020-05-25 17:09:49
  * @FilePath     : \kaoshi\src\views\Exam.vue
  * @Description  : 开始考试
  -->
@@ -280,7 +280,7 @@ export default {
       this.scoreDetails()
     } else {
       // 是新开考试
-      this.id = this.$route.query
+      this.id = this.$route.query.id
       // console.log(this.id)
       this.getData()
     }
@@ -334,15 +334,21 @@ export default {
     getData () {
       this.$load.show()
       // console.log(this.token)
-      this.WR.post('/api/v1/getExercise', {
+      let url = '/api/v1/getExercise'
+      if (this.$route.query.zhenId) {
+        url = '/api/v1/startExam'
+        console.log('是历年真题考试')
+      }
+      this.WR.post(url, {
         token: this.token,
         pid: this.id.pid,
         mid: this.id.mid ? this.id.mid : 0,
-        oid: this.id.oid
+        oid: this.id.oid,
+        paper_id: this.$route.query.zhenId
       }).then(rs => {
-        console.log(JSON.stringify(rs))
+        // console.log((rs))
         if (rs.code === 0) {
-          console.log(JSON.stringify(rs.data.list.length))
+          // console.log(JSON.stringify(rs.data.list.length))
           const data = rs.data
           this.number = data.number
           this.list = data.list

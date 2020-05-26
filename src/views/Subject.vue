@@ -1,7 +1,7 @@
 <!--
  * @Date         : 2020-05-06 14:51:46
  * @LastEditors  : 曾迪
- * @LastEditTime : 2020-05-12 14:18:20
+ * @LastEditTime : 2020-05-25 18:00:39
  * @FilePath     : \kaoshi\src\views\Subject.vue
  * @Description  : 我的科目subject
  -->
@@ -21,7 +21,8 @@
           <div v-if="!item.child[0].child">
             <!-- 无二级 ,无mid -->
             <!-- 详情进入 -->
-            <van-cell :title="item3.name" is-link :to="{path: 'suresubject',query:{pindex: index, oindex: index3, list: JSON.stringify(list)}}" :value="item3.num"  v-for="(item3, index3) in item.child" :key="item3.id"/>
+            <!-- <van-cell :title="item3.name" is-link :to="{path: 'suresubject',query:{pindex: index, oindex: index3, list: JSON.stringify(list)}}" :value="item3.num"  v-for="(item3, index3) in item.child" :key="item3.id"/> -->
+            <van-cell :title="item3.name" is-link @click="linkTo(index, '', index3, list, item3.num)" :value="item3.num"  v-for="(item3, index3) in item.child" :key="item3.id"/>
           </div>
           <div v-else>
             <!-- 有二级分类 -->
@@ -33,13 +34,11 @@
             >
             <van-collapse v-model="active3" accordion :border="false">
               <!-- 详情进入 -->
-              <van-cell :title="item3.name" is-link :to="{path: 'suresubject',query:{pindex: index, mindex: index2, oindex: index3, list: JSON.stringify(list)}}" :value="item3.num"  v-for="(item3, index3) in item2.child" :key="item3.id"/>
+              <!-- <van-cell :title="item3.name" is-link :to="{path: 'suresubject',query:{pindex: index, mindex: index2, oindex: index3, list: JSON.stringify(list)}}" :value="item3.num"  v-for="(item3, index3) in item2.child" :key="item3.id"/> -->
+              <van-cell :title="item3.name" is-link @click="linkTo(index, index2, index3, list, item3.num)" :value="item3.num"  v-for="(item3, index3) in item2.child" :key="item3.id"/>
             </van-collapse>
             </van-collapse-item>
           </div>
-
-          <!-- <van-collapse-item title="标题2" name="2">内容</van-collapse-item>
-          <van-collapse-item title="标题3" name="3" >内容</van-collapse-item>-->
         </van-collapse>
       </van-collapse-item>
     </van-collapse>
@@ -176,8 +175,8 @@ export default {
       })
     }
   },
-  components: {
-    // BackBar
+  linkTo (index, index2, index3, list, num) {
+    this.$route.push({ name: 'suresubject', query: { pindex: index, mindex: index2, oindex: index3, list: JSON.stringify(list) } })
   }
 }
 </script>

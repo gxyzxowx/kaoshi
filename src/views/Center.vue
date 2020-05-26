@@ -1,7 +1,7 @@
 <!--
  * @Date         : 2020-04-30 10:23:16
  * @LastEditors  : 曾迪
- * @LastEditTime : 2020-05-14 16:02:18
+ * @LastEditTime : 2020-05-25 17:55:09
  * @FilePath     : \kaoshi\src\views\Center.vue
  -->
  <style lang="scss" scoped>
@@ -48,12 +48,12 @@
         <img class="level" v-else-if="level==2" src="../assets/img/l2.png" alt="">
     </header>
     <div class="banner">
-      <img src="http://hukaobang.caimaomeng.com/static/kaoshi/img/invitation.png" alt="">
+      <img src="http://hukaobang.caimaomeng.com/static/kaoshi/img/invitation.png" @click="goInvite()" />
     </div>
     <van-cell-group>
       <van-cell title="我的科目" icon="http://hukaobang.caimaomeng.com/static/kaoshi/img/subject.png" is-link to="subject" />
       <van-cell title="新增考试" icon="http://hukaobang.caimaomeng.com/static/kaoshi/img/add.png" is-link to="subject" />
-      <van-cell title="历年真题" icon="http://hukaobang.caimaomeng.com/static/kaoshi/img/history.png" is-link to="index" />
+      <van-cell title="历年真题" icon="http://hukaobang.caimaomeng.com/static/kaoshi/img/history.png" is-link to="history" />
       <van-cell title="考试记录" icon="http://hukaobang.caimaomeng.com/static/kaoshi/img/-record.png" is-link to="record" />
       <van-cell title="我的财富" icon="http://hukaobang.caimaomeng.com/static/kaoshi/img/ware.png" is-link to="wealth" />
       <van-cell title="奖励细则" icon="http://hukaobang.caimaomeng.com/static/kaoshi/img/rule.png" is-link to="rule" />
@@ -83,7 +83,7 @@ export default {
   mounted () {
     // 取得code 以和后端换取token
     // 开发阶段用固定token
-    const token = '8a30zjFHlb26Fn3LAj1IxivYKJg/2K7zwO2yVHVN'
+    const token = '7dd4H47g6CJDFqJFYcafBkt/UgvtL4m2iIS+8OM9'
     this.token = token
     window.sessionStorage.setItem('token', token)
     // getToken后获取个人信息
@@ -139,10 +139,15 @@ export default {
         if (rs.code === 0) {
           _this.avatar = rs.data.avatar
           _this.level = rs.data.level
+          // 个人信息存
+          window.sessionStorage.setItem('userinfo', JSON.stringify(rs.data))
         }
-        // console.log(JSON.stringify(rs))
+        console.log(JSON.stringify(rs))
         this.$load.hide()
       })
+    },
+    goInvite () {
+      window.location.href = `${this.WR.base_url}/api/v1/inviteFriends`
     }
   },
   components: {

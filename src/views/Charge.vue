@@ -1,7 +1,7 @@
 <!--
  * @Date         : 2020-05-11 15:33:15
  * @LastEditors  : 曾迪
- * @LastEditTime : 2020-05-11 16:18:16
+ * @LastEditTime : 2020-05-25 17:56:31
  * @FilePath     : \kaoshi\src\views\Charge.vue
  * @Description  : 充值次数
  -->
@@ -70,7 +70,7 @@
          </div>
        </div>
        <div class="money">
-         <span>充值费用：</span> <span>6.00元/次</span>
+         <span>充值费用：</span> <span>{{purchase_price}}元/次</span>
        </div>
      </main>
      <footer>
@@ -80,22 +80,26 @@
   </div>
 </template>
 <script>
+import Vue from 'vue'
 import { Dialog } from 'vant'
 
+// 全局注册
+Vue.use(Dialog)
 export default {
   data () {
     return {
       name: '',
       num: 0,
       money: '',
-      chargeNum: 1
+      chargeNum: 1,
+      purchase_price: 0.00
     }
   },
   mounted () {
     const obj = this.$route.query
     this.name = obj.name
     this.num = obj.num
-    console.log(obj)
+    this.purchase_price = JSON.parse(window.sessionStorage.getItem('userinfo')).purchase_price
   },
   methods: {
     add () {
@@ -109,7 +113,18 @@ export default {
       }
     },
     sure () {
+      const total = this.chargeNum * this.purchase_price
       console.log('确认支付')
+      Dialog.confirm({
+        title: '确认支付',
+        message: `您购买科目:${this.name}，次数：${this.chargeNum}, 单次费用：${this.purchase_price}元，共${total}元?`
+      })
+        .then(() => {
+          // on confirm
+        })
+        .catch(() => {
+          // on cancel
+        })
     }
   }
 }

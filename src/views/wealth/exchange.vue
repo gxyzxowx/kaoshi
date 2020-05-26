@@ -1,7 +1,7 @@
 <!--
  * @Date         : 2020-05-12 11:33:30
  * @LastEditors  : 曾迪
- * @LastEditTime : 2020-05-22 17:02:01
+ * @LastEditTime : 2020-05-25 15:42:46
  * @FilePath     : \kaoshi\src\views\wealth\exchange.vue
  * @Description  : 星星/钻石兑换
  -->
@@ -117,7 +117,7 @@ export default {
       this.WR.post(url, {
         token: this.token
       }).then((rs) => {
-        console.log(JSON.stringify(rs))
+        // console.log(JSON.stringify(rs))
         if (rs.code === 0) {
           const data = rs.data
           this.list = data.list
@@ -144,13 +144,23 @@ export default {
     sendExchange (pid, mid, oid) {
       let url = ''
       if (this.type === 1) {
-        url = '/api/v1/starExchange'
+        url = '/api/v1/confirmExchangeStars'
       } else if (this.type === 2) {
-        url = '/api/v1/diamondExchange'
+        url = '/api/v1/confirmExchangeDiamonds'
       }
+      console.log(this.token)
+      const subject = `${pid},${mid},${oid}`
+      console.log(subject)
       this.WR.post(url, {
-        token: this.token
+        token: this.token,
+        subject_id: subject
       }).then(rs => {
+        if (rs.code === 1) {
+          Dialog({ message: rs.message })
+        } else if (rs.code === 0) {
+          Dialog({ message: rs.message })
+          this.getData()
+        }
         console.log(rs)
       })
     }

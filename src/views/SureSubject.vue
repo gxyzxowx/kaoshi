@@ -1,7 +1,7 @@
 <!--
  * @Date         : 2020-05-11 11:12:39
  * @LastEditors  : 曾迪
- * @LastEditTime : 2020-05-14 15:02:58
+ * @LastEditTime : 2020-05-25 16:48:32
  * @FilePath     : \kaoshi\src\views\SureSubject.vue
  * @Description  : 确认科目
  -->
@@ -114,7 +114,7 @@ export default {
     // 开始考试
     start () {
       console.log('begin')
-      this.$router.push({ path: '/exam', query: this.id })
+      this.$router.push({ path: '/exam', query: { id: this.id } })
     }
   }
 }

@@ -1,7 +1,7 @@
 /*
  * @Date         : 2020-04-30 10:23:16
  * @LastEditors  : 曾迪
- * @LastEditTime : 2020-05-15 14:29:36
+ * @LastEditTime : 2020-05-25 16:05:29
  * @FilePath     : \kaoshi\src\router\index.js
  */
 import Vue from 'vue'
@@ -86,6 +86,18 @@ const routes = [
     path: '/wealth/record',
     name: 'InviteRecord',
     component: () => import('../views/wealth/inviteRecord.vue')
+  },
+  {
+    // 历年真题
+    path: '/history',
+    name: 'Histroy',
+    component: () => import('../views/History.vue')
+  },
+  {
+    // 历年真题--确认年份
+    path: '/historydetail',
+    name: 'HistoryDetail',
+    component: () => import('../views/HistoryDetail.vue')
   }
 ]
 
