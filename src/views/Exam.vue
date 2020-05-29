@@ -1,7 +1,7 @@
 <!--
  * @Date         : 2020-05-13 14:36:44
  * @LastEditors  : 曾迪
- * @LastEditTime : 2020-05-25 17:09:49
+ * @LastEditTime : 2020-05-29 15:52:21
  * @FilePath     : \kaoshi\src\views\Exam.vue
  * @Description  : 开始考试
  -->
@@ -113,6 +113,9 @@
     color: rgba(255, 0, 0, 0.788);
   }
 }
+.look-detail{
+  margin-bottom: .25rem;
+}
 </style>
 <template>
   <div>
@@ -152,21 +155,22 @@
       <section class="panel">
         <div class="title" v-if="!Det.show">答题进度：{{panel.progress? panel.progress: 0}}%</div>
         <div class="desc" v-if="!Det.show">未答题目数： {{panel.noAnswerNum? panel.noAnswerNum: 0}} 个</div>
+        <div class="look-detail first" v-if="Det.show">考试科目： {{Det.name}}</div>
+        <div class="look-detail" v-if="Det.show">所得分数： {{Det.fraction}}</div>
         <div class="timu" v-if="panel.no0.length">
           <div class="inner-title">单选题：</div>
           <ul class="handlelist">
-            <li :class="{ right: Det.show, wrong: item.reslut0!=1}"
+            <li :class="{ right: Det.show, wrong: Det.show&&item.reslut0!=1}"
               v-for="(item, index) in panel.no0"
               :key="index"
               @click="choseOne(item.index)"
             >{{item.index+1}}</li>
           </ul>
         </div>
-
         <div class="timu" v-if="panel.no1.length">
           <div class="inner-title">共答题：</div>
           <ul class="handlelist">
-            <li :class="{right: Det.show, wrong: item.reslut0!=1}"
+            <li :class="{right: Det.show, wrong:  Det.show&&item.reslut0!=1}"
               v-for="(item, index) in panel.no1"
               :key="index"
               @click="choseOne(item.index)"
@@ -177,7 +181,7 @@
         <div class="timu"  v-if="panel.no2.length">
           <div class="inner-title">共题题：</div>
           <ul class="handlelist">
-            <li :class="{right: Det.show, wrong: item.reslut0!=1}"
+            <li :class="{right: Det.show, wrong:  Det.show&&item.reslut0!=1}"
               v-for="(item, index) in panel.no2"
               :key="index"
               @click="choseOne(item.index)"
@@ -188,7 +192,7 @@
         <div class="timu"  v-if="panel.no3.length">
           <div class="inner-title">多选题：</div>
           <ul class="handlelist">
-            <li :class="{right: Det.show, wrong: item.reslut0!=1}"
+            <li :class="{right: Det.show, wrong:  Det.show&&item.reslut0!=1}"
               v-for="(item, index) in panel.no3"
               :key="index"
               @click="choseOne(item.index)"
@@ -258,10 +262,14 @@ export default {
         no2: [],
         no3: []
       },
+      // 继续答题状态
+      continueIng: false,
       // 查看答案解析
       Det: {
         // 是否为答案解析功能
-        show: false
+        show: false,
+        name: '',
+        fraction: ''
       }
     }
   },
@@ -273,6 +281,8 @@ export default {
     // console.log(number)
     if (number && !seeDetail) {
       // 如果有number，是继续答题
+      this.backtitle = '继续答题'
+      this.continueIng = true
       this.getContinueData()
     } else if (seeDetail) {
       // 是查看得分详情
@@ -298,7 +308,7 @@ export default {
         this.panel.no2 = []
         this.list.map((item, index, arr) => {
           arr[index].index = index
-          arr[index].userAnswer = this.answerlist[index]
+          arr[index].user_answer = this.answerlist[index]
           if (!this.answerlist[index]) {
             noAnswerNum++
             const type = item.type
@@ -319,7 +329,7 @@ export default {
     // 继续答题时调用
     getContinueData () {
       console.log(this.number)
-      this.WR.post('/api/v1/continueAnswer', {
+      this.WR.get('/api/v1/continueAnswer', {
         token: this.token,
         number: this.number
       }).then(rs => {
@@ -402,10 +412,10 @@ export default {
           arr[index].index = index
           let answerArr = []
 
-          if (item.userAnswer.length > 1) {
-            answerArr = item.userAnswer.split(',')
+          if (item.user_answer.length > 1) {
+            answerArr = item.user_answer.split(',')
           } else {
-            answerArr.push(item.userAnswer)
+            answerArr.push(item.user_answer)
           }
           this.answerlist.push(answerArr)
           // 正确还是错误result 0 错误，1正确
@@ -414,7 +424,9 @@ export default {
           arr[index].reslut0 = item.result
           this.panel[notext].push(item)
         })
-        console.log(this.list)
+        console.log(rs)
+        this.Det.name = rs.data.name
+        this.Det.fraction = rs.data.fraction
         // console.log(this.answerlist)
       })
     },
@@ -434,8 +446,17 @@ export default {
         } else if (this.ifIng && this.panel.noAnswerNum !== -1) {
         // 2在答题中，但已已进入过答题面板，返回答题面板
           this.ifIng = false
+        } else if (this.continueIng) {
+        // 是继续答题的状态，返回查看考试记录，并保持一下记录
+          Dialog.confirm({
+            title: '您还没有做完试卷',
+            message: '是否退出答题?（会自动为您保存进度）'
+          }).then(() => {
+            this.jiaojuan(type)
+            this.$router.push('/')
+          })
         } else {
-        // 3在答题面板中，返回答题Ing
+          // 3在答题面板中，返回答题Ing
           this.ifIng = true
         }
       } else {
@@ -451,12 +472,12 @@ export default {
     // 交卷
     jiaojuan (type) {
       // / 状态 0=返回未提交 1=提交答题
-      console.log(this.answerlist)
+
       const data = this.handleData()
       // console.log(type)
-      // console.log(JSON.stringify(data))
-      // console.log(this.number)
-      // console.log(this.token)
+      console.log(this.number)
+      console.log(this.token)
+      console.log(JSON.stringify(data))
       this.$load.show()
       this.WR.post('/api/v1/saveAnswer', {
         token: this.token,
@@ -474,15 +495,16 @@ export default {
     },
     // 交卷或者返回，处理数据
     handleData () {
+      console.log(this.answerlist)
       const list = []
-      this.answerlist.map((item, index) => {
-        const str = item.toString()
+      this.list.map((item, index) => {
+        const str = this.answerlist[index] ? (this.answerlist[index]).toString() : ''
         list.push({
           id: this.list[index].id,
-          userAnswer: str
+          user_answer: str
         })
       })
-      // console.log(list)
+      console.log(list)
       return list
     },
     // 在面板中选择一个未答题继续答题

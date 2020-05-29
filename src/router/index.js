@@ -1,12 +1,12 @@
 /*
  * @Date         : 2020-04-30 10:23:16
  * @LastEditors  : 曾迪
- * @LastEditTime : 2020-05-26 10:20:28
+ * @LastEditTime : 2020-05-28 15:17:29
  * @FilePath     : \kaoshi\src\router\index.js
  */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Center from '../views/Center.vue'
+// import Center from '../views/Center.vue'
 
 Vue.use(VueRouter)
 
@@ -15,7 +15,7 @@ const routes = [
     // 个人中心
     path: '/',
     name: 'Center',
-    component: Center
+    component: () => import('../views/Center.vue')
   },
   {
     // 我的科目

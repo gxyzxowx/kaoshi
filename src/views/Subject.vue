@@ -1,7 +1,7 @@
 <!--
  * @Date         : 2020-05-06 14:51:46
  * @LastEditors  : 曾迪
- * @LastEditTime : 2020-05-26 10:36:54
+ * @LastEditTime : 2020-05-29 16:20:43
  * @FilePath     : \kaoshi\src\views\Subject.vue
  * @Description  : 我的科目subject
  -->
@@ -169,7 +169,7 @@ export default {
       this.WR.get('/api/v1/mySubject', {
         token: _this.token
       }).then(rs => {
-        console.log(JSON.stringify(rs))
+        // console.log(JSON.stringify(rs))
         this.$load.hide()
         this.list = rs.data
       })

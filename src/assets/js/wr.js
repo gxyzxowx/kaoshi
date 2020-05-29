@@ -1,7 +1,7 @@
 /*
  * @Date         : 2020-04-30 10:41:48
  * @LastEditors  : 曾迪
- * @LastEditTime : 2020-05-25 17:19:42
+ * @LastEditTime : 2020-05-29 16:21:55
  * @FilePath     : \kaoshi\src\assets\js\wr.js
  */
 import axios from 'axios'
@@ -14,6 +14,7 @@ const obj = {
       axios.get(BASE_URL + url, {
         params: params
       }).then(res => {
+        console.log(res)
         resolve(res.data)
       }).catch(err => {
         reject(err.data)

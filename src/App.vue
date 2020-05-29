@@ -1,8 +1,8 @@
 <!--
  * @Date         : 2020-04-30 10:23:16
  * @LastEditors  : 曾迪
- * @LastEditTime : 2020-05-19 10:30:09
- * @FilePath     : \09house_agente:\codes\part3\06wx_kaoshi\kaoshi\src\App.vue
+ * @LastEditTime : 2020-05-28 15:17:39
+ * @FilePath     : \kaoshi\src\App.vue
  * @Description  :
  -->
 <template>
@@ -40,7 +40,7 @@ export default {
         window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appid}&redirect_uri=${encodeURIComponent(local)}&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect`
       } else {
         // 你自己的业务逻辑
-        alert(`这是code: ${this.code}`)
+        // alert(`这是code: ${this.code}`)
         this.getInfo()
       }
     },
@@ -62,7 +62,11 @@ export default {
       this.WR.post('/api/base/wxLogin', {
         code: _this.code
       }, this).then((rs) => {
-        alert(JSON.stringify(rs))
+        if (rs.code === 0) {
+          // alert(JSON.stringify(rs))
+          const token = rs.data.token
+          window.sessionStorage.setItem('token', token)
+        }
       })
     }
   }
